@@ -4,7 +4,7 @@ import uuid
 from telegram import Update
 from telegram.ext import ApplicationBuilder, MessageHandler, CommandHandler, filters, ContextTypes
 
-BOT_TOKEN = "8758514021:AAHB9c1CKTKhCCLL0nyiVVPbkhIuPYGeeJU"
+BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 # ✅ Start Command
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -25,7 +25,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(text)
 
 
-# 🎬 Video Download Function
+# 🎬 Video Download
 async def download_video(update: Update, context: ContextTypes.DEFAULT_TYPE):
     url = update.message.text.strip()
 
@@ -54,10 +54,9 @@ async def download_video(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await msg.edit_text("❌ ভিডিও ডাউনলোড করা যায়নি!")
 
 
-# 🚀 App Setup
+# 🚀 App
 app = ApplicationBuilder().token(BOT_TOKEN).build()
 
-# ✅ Handlers
 app.add_handler(CommandHandler("start", start))
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, download_video))
 
